@@ -2,7 +2,10 @@
 import { toTypedSchema } from '@vee-validate/zod'
 import { Loader2Icon } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
+import { toast } from 'vue-sonner'
 import { z } from 'zod'
+
+const router = useRouter()
 
 const formSchema = toTypedSchema(
   z.object({
@@ -17,8 +20,22 @@ const form = useForm({
 
 const isLoading = ref(false)
 
-const onSubmit = form.handleSubmit((values) => {
-  console.log('Form submitted!', values)
+const onSubmit = form.handleSubmit(async (values) => {
+  isLoading.value = true
+  await authClient.signIn.email({
+    email: values.email,
+    password: values.password,
+  }, {
+    onSuccess: () => {
+      isLoading.value = false
+      toast.success('Logged in successfully')
+      router.push('/workspaces')
+    },
+    onError: (ctx) => {
+      isLoading.value = false
+      toast.error(ctx.error.message)
+    },
+  })
 })
 </script>
 

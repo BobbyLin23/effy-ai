@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'shadcn-nuxt',
     '@nuxt/icon',
+    '@nuxtjs/color-mode',
   ],
   css: ['~/assets/css/main.css'],
   devServer: {
@@ -26,4 +27,8 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
+  colorMode: {
+    classSuffix: '',
+    preference: 'system',
+  },
 })

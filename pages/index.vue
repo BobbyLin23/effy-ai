@@ -7,5 +7,6 @@
     <Button @click="$router.push('/sign-in')">
       Click
     </Button>
+    <ModeToggle />
   </div>
 </template>

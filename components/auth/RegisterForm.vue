@@ -2,7 +2,10 @@
 import { toTypedSchema } from '@vee-validate/zod'
 import { Loader2Icon } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
+import { toast } from 'vue-sonner'
 import { z } from 'zod'
+
+const router = useRouter()
 
 const formSchema = toTypedSchema(
   z.object({
@@ -18,8 +21,22 @@ const form = useForm({
 
 const isLoading = ref(false)
 
-const onSubmit = form.handleSubmit((values) => {
-  console.log(values)
+const onSubmit = form.handleSubmit(async (values) => {
+  isLoading.value = true
+  await authClient.signUp.email({
+    email: values.email,
+    password: values.password,
+    name: values.name,
+  }, {
+    onSuccess: () => {
+      toast.success('Account created successfully')
+      router.push('/workspaces')
+    },
+    onError: (ctx) => {
+      toast.error(ctx.error.message)
+    },
+  })
+  isLoading.value = false
 })
 </script>
 
@@ -52,7 +69,7 @@ const onSubmit = form.handleSubmit((values) => {
         <FormMessage />
       </FormItem>
     </FormField>
-    <Button class="w-full" type="submit">
+    <Button class="w-full" type="submit" :disabled="isLoading">
       <Loader2Icon v-if="isLoading" class="mr-2 h-4 w-4 animate-spin" />
       Register
     </Button>
