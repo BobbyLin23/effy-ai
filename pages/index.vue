@@ -4,6 +4,8 @@
 
 <template>
   <div>
-    <Button>Click</Button>
+    <Button @click="$router.push('/sign-in')">
+      Click
+    </Button>
   </div>
 </template>
