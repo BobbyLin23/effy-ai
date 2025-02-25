@@ -23,7 +23,7 @@ RUN ls -la && ls -la .output || echo ".output目录不存在"
 FROM node:20-alpine AS production
 
 # 复制构建阶段生成的文件和必要的依赖
-COPY --from=build /zeabur/.output ./.output
+COPY --from=build /.zeabur/.output ./.output
 
 # 设置环境变量
 ENV NODE_ENV=production
