@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgres://aabbcc:root@db:5432/effy-ai
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: postgres:17-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=aabbcc
+      - POSTGRES_DB=effy-ai
+    restart: always
+
+volumes:
+  postgres_data:
