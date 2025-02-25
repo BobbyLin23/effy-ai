@@ -16,6 +16,9 @@ COPY . .
 # 构建应用
 RUN pnpm build
 
+# 检查.output目录是否存在
+RUN ls -la && ls -la .output || echo ".output目录不存在"
+
 # 生产阶段
 FROM node:20-alpine AS production
 
