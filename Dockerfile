@@ -17,13 +17,15 @@ COPY . .
 RUN pnpm build
 
 # 检查.output目录是否存在
-RUN ls -la && ls -la .output || echo ".output目录不存在"
+RUN ls -la && ls -la .zeabur || echo ".output目录不存在"
 
 # 生产阶段
 FROM node:20-alpine AS production
 
-# 复制构建阶段生成的文件和必要的依赖
-COPY --from=build /.zeabur/.output ./.output
+WORKDIR /app
+
+# 尝试复制不同的可能输出目录
+COPY --from=build /app/.zeabur/.output ./.output
 
 # 设置环境变量
 ENV NODE_ENV=production
