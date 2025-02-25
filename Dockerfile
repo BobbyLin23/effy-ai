@@ -22,12 +22,8 @@ RUN ls -la && ls -la .output || echo ".output目录不存在"
 # 生产阶段
 FROM node:20-alpine AS production
 
-WORKDIR /app
-
 # 复制构建阶段生成的文件和必要的依赖
-COPY --from=build /app/.output ./.output
-COPY --from=build /app/package.json ./package.json
-COPY --from=build /app/nuxt.config.ts ./nuxt.config.ts
+COPY --from=build /zeabur/.output ./.output
 
 # 设置环境变量
 ENV NODE_ENV=production
