@@ -24,9 +24,6 @@ FROM node:20-alpine AS production
 
 WORKDIR /app
 
-# 尝试复制不同的可能输出目录
-COPY --from=build /app/.zeabur/.output ./.output
-
 # 设置环境变量
 ENV NODE_ENV=production
 
