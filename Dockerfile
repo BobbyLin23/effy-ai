@@ -16,8 +16,6 @@ COPY . .
 # 构建应用
 RUN pnpm build
 
-# 检查.output目录是否存在
-RUN ls -la && ls -la .zeabur || echo ".output目录不存在"
 
 # 生产阶段
 FROM node:20-alpine AS production
@@ -31,4 +29,4 @@ ENV NODE_ENV=production
 EXPOSE 3000
 
 # 启动应用
-CMD ["node", ".output/server/index.mjs"]
+CMD ["node", ".zeabur/.output/server/index.mjs"]
